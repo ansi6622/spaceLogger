@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-  <title>Hello World!</title>
+  <title>Space Logs</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js" charset="utf-8"></script>
   <script src="Build/Cesium/Cesium.js"></script>
 
@@ -23,6 +23,17 @@
   <script>
   $(function(){
 
+ $.ajax({
+   url: "http://www.spaceapi.net/directory.json",
+   success: function(data){
+     localStorage.data = JSON.stringify(data);
+localStorage.setItem("data", localStorage.data);
+var ded = JSON.parse(localStorage.data);
+console.log(ded);
+var meow = localStorage.getItem('data');
+console.log(meow);
+   }
+ })
  $.ajax({
    url: "http://api.ipinfodb.com/v3/ip-city/?key=af67fc51cc655d4b4ea24fbc20d60f113c2d84be8aaf15ac76beb3e38a972892",
    success: function(data){
