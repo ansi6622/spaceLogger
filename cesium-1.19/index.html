@@ -22,83 +22,51 @@
   <div id="cesiumContainer"></div>
   <script>
   $(function(){
+var spaceApiObject;
 
- $.ajax({
-   url: "http://www.spaceapi.net/directory.json",
-   success: function(data){
-     localStorage.data = JSON.stringify(data);
-localStorage.setItem("data", localStorage.data);
-var ded = JSON.parse(localStorage.data);
-console.log(ded);
-var meow = localStorage.getItem('data');
-console.log(meow);
-   }
+ $.getJSON("http://www.spaceapi.net/directory.json").then(function(data){
+    localStorage.data = JSON.stringify(data);
+    localStorage.setItem("data", localStorage.data);
+    spaceApiObject = JSON.parse(localStorage.data);
+    console.log(spaceApiObject);
+    var stringed = localStorage.getItem('data');
+    console.log(stringed);
+ }).then(function(){
+
+for(var key in spaceApiObject){
+
+var temp = spaceApiObject[key].split('/');
+var look = temp[2];
+console.log(temp);
+console.log(look);
+
+  // $.ajax({
+  //   url: "http://api.ipinfodb.com/v3/ip-city/?key=af67fc51cc655d4b4ea24fbc20d60f113c2d84be8aaf15ac76beb3e38a972892" + look ,
+  //   success: function(data){
+  //     console.log(data);
+  //   }
+  // })
+
+}
+
  })
- $.ajax({
-   url: "http://api.ipinfodb.com/v3/ip-city/?key=af67fc51cc655d4b4ea24fbc20d60f113c2d84be8aaf15ac76beb3e38a972892",
-   success: function(data){
-     console.log(data);
-   }
- })
+
 
     var viewer = new Cesium.Viewer('cesiumContainer');
 
-    setTimeout(function(){
-      console.log('.......')
+function addSphere(lat, long){
 
-      var circle = new Cesium.CircleGeometry({
-        center : Cesium.Cartesian3.fromDegrees(-105.2769, 40.0496),
-        radius : 100.0,
-        color : "lime"
-      });
-      var geometry = Cesium.CircleGeometry.createGeometry(circle);
-      viewer.zoomTo(circle);
-    }, 1000)
-
-    var blueEllipsoid = viewer.entities.add({
-        name : 'Blue ellipsoid',
-        position : Cesium.Cartesian3.fromDegrees(40.0496, -105.2769),
-        ellipsoid : {
-            radii : new Cesium.Cartesian3(200000.0, 200000.0, 300000.0),
-            material : Cesium.Color.DODGERBLUE
-        }
-    });
-
-    var redSphere = viewer.entities.add({
-        name : 'red sphere with black outline',
-        position : Cesium.Cartesian3.fromDegrees(-105.2769, 40.0496),
-        ellipsoid : {
-            radii : new Cesium.Cartesian3(300000.0, 300000.0, 300000.0),
-            material : Cesium.Color.PEACHPUFF.withAlpha(0.5),
-            outline : true,
-            outlineColor : Cesium.Color.BLACK
-        }
-    });
-
-    var redSphere = viewer.entities.add({
-        name : 'pink sphere with lime outline',
-        position : Cesium.Cartesian3.fromDegrees(45.5200, 122.6819),
-        ellipsoid : {
-            radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0),
-            material : Cesium.Color.PINK.withAlpha(0.5),
-            outline : true,
-            outlineColor : Cesium.Color.LIME
-        }
-    });
-
-    var outlineOnly = viewer.entities.add({
-        name : 'yellow ellipsoid outline',
-        position: Cesium.Cartesian3.fromDegrees(-100.0, 40.0, 300000.0),
-        ellipsoid : {
-            radii : new Cesium.Cartesian3(200000.0, 200000.0, 300000.0),
-            fill : false,
-            outline : true,
-            outlineColor : Cesium.Color.LIME,
-            slicePartitions : 24,
-            stackPartitions : 36
-        }
-    });
-
+  var redSphere = viewer.entities.add({
+      name : 'red sphere with black outline',
+      position : Cesium.Cartesian3.fromDegrees(lat, long),
+      ellipsoid : {
+          radii : new Cesium.Cartesian3(300000.0, 300000.0, 300000.0),
+          material : Cesium.Color.PEACHPUFF.withAlpha(0.5),
+          outline : true,
+          outlineColor : Cesium.Color.BLACK
+      }
+  });
+}
     viewer.zoomTo(viewer.entities);
 
   })
