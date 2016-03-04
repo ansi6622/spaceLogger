@@ -11,31 +11,31 @@ $.getJSON("http://www.spaceapi.net/directory.json").then(function(data){
 }).then(function(){
 
 for(var key in spaceApiObject){
-var counter = 0 + counter;
 var temp = spaceApiObject[key].split('/');
 var look = temp[2];
 console.log(temp);
 if(look.indexOf('.com') >= 0 || look.indexOf('.org') >= 0 || look.indexOf('.net') >= 0 ) {
 console.log(key);
 console.log(look);
-// $.ajax({
-//   url: "http://api.ipinfodb.com/v3/ip-city/?key=af67fc51cc655d4b4ea24fbc20d60f113c2d84be8aaf15ac76beb3e38a972892&ip=" + look ,
-//   success: function(data){
-//     var now = data.split(";");
-//     var lat = now[8];
-//     var long = now[9];
-// var redSphere = viewer.entities.add({
-//   name : 'lime sphere with black outline',
-//   position : Cesium.Cartesian3.fromDegrees(long, lat),
-//   ellipsoid : {
-//     radii : new Cesium.Cartesian3(300000.0, 300000.0, 300000.0),
-//     material : Cesium.Color.LIME.withAlpha(0.5),
-//     outline : true,
-//     outlineColor : Cesium.Color.BLACK
-//   }
-// });
-//   }
-// })
+$.ajax({
+  url: "http://api.ipinfodb.com/v3/ip-city/?key=af67fc51cc655d4b4ea24fbc20d60f113c2d84be8aaf15ac76beb3e38a972892&ip=" + look,
+  success: function(data){
+    var now = data.split(";");
+    var namme = key;
+    var lat = now[8];
+    var long = now[9];
+var redSphere = viewer.entities.add({
+  name : namme,
+  position : Cesium.Cartesian3.fromDegrees(long, lat),
+  ellipsoid : {
+    radii : new Cesium.Cartesian3(300000.0, 300000.0, 300000.0),
+    material : Cesium.Color.LIME.withAlpha(0.5),
+    outline : true,
+    outlineColor : Cesium.Color.BLACK
+  }
+});
+  }
+})
 
 }
 else{
